@@ -51,19 +51,32 @@ public class WarehouseManagementSystem {
     private static void addProduct(Scanner scanner) {
         System.out.print("Enter product type 1(Electronics) / 2(FoodProduct): ");
         String type = scanner.nextLine();
+    
         System.out.print("Enter product name: ");
         String name = scanner.nextLine();
-        System.out.print("Enter quantity: ");
-        int quantity = Integer.parseInt(scanner.nextLine());
+    
+        int quantity;
+        while (true) {
+            System.out.print("Enter quantity (positive number only): ");
+            try {
+                quantity = Integer.parseInt(scanner.nextLine());
+                if (quantity <= 0) {
+                    System.out.println("Quantity must be greater than zero!!!");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
+            }
+        }
     
         Product product;
-    
         if (type.equals("1")) {
             product = new Electronics(name, quantity);
         } else if (type.equals("2")) {
             product = new FoodProduct(name, quantity);
         } else {
-            System.out.println("Invalid product type! Please enter 1 or 2.");
+            System.out.println("Invalid product type!");
             return;
         }
     
