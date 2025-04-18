@@ -61,7 +61,7 @@ public class WarehouseManagementSystem {
             try {
                 quantity = Integer.parseInt(scanner.nextLine());
                 if (quantity <= 0) {
-                    System.out.println("Quantity must be greater than zero!!!");
+                    System.out.println("Quantity must be greater than zero!!");
                 } else {
                     break;
                 }
