@@ -99,25 +99,36 @@ public class WarehouseManagementSystem {
         System.out.print("Enter product name to sell: ");
         String name = scanner.nextLine();
     
-        if (warehouse.containsKey(name)) {
-            Product product = warehouse.get(name);
-            
-            System.out.print("Enter quantity to sell: ");
-            int quantityToSell = Integer.parseInt(scanner.nextLine());
-    
-            try {
-                if (product.getQuantity() < quantityToSell) {
-                    throw new OutOfStockException("Not enough stock! Only " + product.getQuantity() + " left.");
-                }
-    
-                product.updateStock(-quantityToSell);
-                System.out.println("Sold " + quantityToSell + " units of " + product.getName());
-    
-            } catch (OutOfStockException e) {
-                System.out.println(" " + e.getMessage());
-            }
-        } else {
+        if (!warehouse.containsKey(name)) {
             System.out.println("Product not found!");
+            return;
+        }
+    
+        Product product = warehouse.get(name);
+    
+        int sellQuantity;
+        while (true) {
+            System.out.print("Enter quantity to sell: ");
+            try {
+                sellQuantity = Integer.parseInt(scanner.nextLine());
+                if (sellQuantity <= 0) {
+                    System.out.println("Quantity must be a positive number!");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input! Please enter a number.");
+            }
+        }
+    
+        try {
+            if (product.getQuantity() < sellQuantity) {
+                throw new OutOfStockException("Not enough stock! Available: " + product.getQuantity());
+            }
+            product.updateStock(-sellQuantity);
+            System.out.println("✅ Sold " + sellQuantity + " unit(s) of " + product.getName());
+        } catch (OutOfStockException e) {
+            System.out.println(e.getMessage());
         }
     }
     
