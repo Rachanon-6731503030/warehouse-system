@@ -60,7 +60,7 @@ public class WarehouseManagementSystem {
         System.out.print("Enter product type 1(Electronics) / 2(FoodProduct): ");
         String type = scanner.nextLine();
     
-        System.out.print("Enter product name: ");
+        System.out.print("Enter product Name / product ID: ");
         String name = scanner.nextLine();
     
         int quantity;
