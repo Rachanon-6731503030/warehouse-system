@@ -9,7 +9,7 @@ public class WarehouseManagementSystem {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         loadFromFile();
-
+    
         while (true) {
             System.out.println("\n--- Warehouse Management ---");
             System.out.println("1. Add Product");
@@ -19,9 +19,16 @@ public class WarehouseManagementSystem {
             System.out.println("5. Save & Exit");
             System.out.println("6. Reset Warehouse");
             System.out.print("Choose: ");
+    
+            int choice;
 
-            int choice = Integer.parseInt(scanner.nextLine());
-
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input! Please enter a number (1-6).");
+                    continue;
+                }
+    
             switch (choice) {
                 case 1:
                     addProduct(scanner);
@@ -39,11 +46,12 @@ public class WarehouseManagementSystem {
                     saveToFile();
                     System.out.println("Saved! Goodbye!");
                     System.exit(0);
+                    break;
                 case 6:
                     resetFileWithConfirm(scanner);
                     break;
                 default:
-                    System.out.println("Invalid Choice");
+                    System.out.println("Invalid choice! Please choose between 1 and 6.");
             }
         }
     }
@@ -126,7 +134,7 @@ public class WarehouseManagementSystem {
                 throw new OutOfStockException("Not enough stock! Available: " + product.getQuantity());
             }
             product.updateStock(-sellQuantity);
-            System.out.println("✅ Sold " + sellQuantity + " unit(s) of " + product.getName());
+            System.out.println("Sold " + sellQuantity + " unit(s) of " + product.getName());
         } catch (OutOfStockException e) {
             System.out.println(e.getMessage());
         }
